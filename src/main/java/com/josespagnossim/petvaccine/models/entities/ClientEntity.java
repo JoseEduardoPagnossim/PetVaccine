@@ -20,7 +20,7 @@ public class ClientEntity {
     private String name;
     private String document;
     private String email;
-    private String proneNumber;
+    private String phoneNumber;
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<PetEntity> pets;

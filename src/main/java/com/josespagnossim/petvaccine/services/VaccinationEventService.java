@@ -26,7 +26,7 @@ public class VaccinationEventService {
         this.vaccineRepository = vaccineRepository;
     }
 
-    public VaccinationEventEntity createVaccinationEvent(VaccinationEventDto eventDto) {
+    public VaccinationEventDto createVaccinationEvent(VaccinationEventDto eventDto) {
         PetEntity pet = petsRepository.findById(eventDto.petId())
                 .orElseThrow(() -> new PetNotFound("Pet not found"));
 
@@ -38,6 +38,11 @@ public class VaccinationEventService {
         vaccinationEvent.setVaccine(vaccine);
         vaccinationEvent.setVaccinationDate(eventDto.vaccinationDate());
 
-        return vaccinationEventRepository.save(vaccinationEvent);
+        VaccinationEventEntity saveEvent = vaccinationEventRepository.save(vaccinationEvent);
+
+        return new VaccinationEventDto(
+                saveEvent.getId(),
+                saveEvent.getPet().getId(),
+                saveEvent.getVaccinationDate());
     }
 }

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/pet")
+@RequestMapping("/pets")
 public class PetController {
 
     private final PetService petService;
@@ -19,8 +19,8 @@ public class PetController {
         this.petService = petService;
     }
 
-    @PostMapping
-    public PetEntity createPet(@PathVariable Long clientId, @RequestBody PetDto petDto) {
+    @PostMapping("/{clientId}")
+    public PetDto createPet(@PathVariable Long clientId, @RequestBody PetDto petDto) {
         return petService.createPet(clientId, petDto);
     }
 

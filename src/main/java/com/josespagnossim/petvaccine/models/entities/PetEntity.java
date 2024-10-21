@@ -21,7 +21,7 @@ public class PetEntity {
     private String species;
     private String breed;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
     private ClientEntity client;
 }

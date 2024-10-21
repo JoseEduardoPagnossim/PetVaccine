@@ -4,6 +4,7 @@ import com.josespagnossim.petvaccine.Dtos.ClientDto;
 import com.josespagnossim.petvaccine.exceptions.client.ClientNotFound;
 import com.josespagnossim.petvaccine.exceptions.client.InvalidInsertionOfClientData;
 import com.josespagnossim.petvaccine.models.entities.ClientEntity;
+import com.josespagnossim.petvaccine.models.entities.PetEntity;
 import com.josespagnossim.petvaccine.models.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public class ClientService {
         this.clientRepository = clientRepository;
     }
 
-    public ClientEntity creatClient(ClientDto clientDto) {
+    public ClientDto creatClient(ClientDto clientDto) {
         if(clientDto.name() == null || clientDto.document() == null) {
             throw new InvalidInsertionOfClientData("Client name or document cannot be null");
         } else {
@@ -31,9 +32,22 @@ public class ClientService {
             client.setName(clientDto.name());
             client.setDocument(clientDto.document());
             client.setEmail(clientDto.email());
-            client.setDocument(clientDto.phoneNumber());
-            return clientRepository.save(client);
+            client.setPhoneNumber(clientDto.phoneNumber());
+
+            ClientEntity saveClient = clientRepository.save(client);
+
+            return new ClientDto(
+                    saveClient.getId(),
+                    saveClient.getName(),
+                    saveClient.getDocument(),
+                    saveClient.getEmail(),
+                    saveClient.getPhoneNumber()
+                     );
         }
+    }
+
+    public List<ClientEntity> findAllWithPets(){
+        return clientRepository.findAllWithPets();
     }
 
     public List<ClientEntity> getAllClients() {

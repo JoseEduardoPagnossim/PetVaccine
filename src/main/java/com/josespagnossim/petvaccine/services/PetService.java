@@ -1,11 +1,13 @@
 package com.josespagnossim.petvaccine.services;
 
 
+import com.josespagnossim.petvaccine.Dtos.ClientDto;
 import com.josespagnossim.petvaccine.Dtos.PetDto;
 import com.josespagnossim.petvaccine.exceptions.client.ClientNotFound;
 import com.josespagnossim.petvaccine.exceptions.pets.InvalidInsertionOfPetData;
 import com.josespagnossim.petvaccine.models.entities.ClientEntity;
 import com.josespagnossim.petvaccine.models.entities.PetEntity;
+import com.josespagnossim.petvaccine.models.entities.VaccinationEventEntity;
 import com.josespagnossim.petvaccine.models.repositories.ClientRepository;
 import com.josespagnossim.petvaccine.models.repositories.PetsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +29,7 @@ public class PetService {
     }
 
 
-    public PetEntity createPet(Long clientId, PetDto petDto){
+    public PetDto createPet(Long clientId, PetDto petDto){
         ClientEntity client = clientRepository.findById(clientId)
                 .orElseThrow(() -> new ClientNotFound("Client not found"));
 
@@ -40,8 +42,15 @@ public class PetService {
             pet.setSpecies(petDto.species());
             pet.setAge(petDto.age());
             pet.setBreed(petDto.breed());
-            pet.setClient(client);
-            return petsRepository.save(pet);
+
+            PetEntity savePet = petsRepository.save(pet);
+
+            return new PetDto(
+                    savePet.getName(),
+                    savePet.getSpecies(),
+                    savePet.getBreed(),
+                    savePet.getAge()
+            );
         }
     }
 

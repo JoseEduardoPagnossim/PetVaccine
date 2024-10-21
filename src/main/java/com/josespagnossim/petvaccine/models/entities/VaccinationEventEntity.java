@@ -23,5 +23,7 @@ public class VaccinationEventEntity {
     @ManyToOne
     private VaccineEntity vaccine;  // Vacina aplicada
 
-    private LocalDate vaccinationDate;  // Data da vacinação
+    private String vaccinationDate;  // Data da vacinação
+
+
 }

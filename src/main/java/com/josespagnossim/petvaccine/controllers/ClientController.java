@@ -20,9 +20,14 @@ public class ClientController {
     }
 
     @PostMapping
-    public ClientEntity createClient(@RequestBody ClientDto clientDto) {
+    public ClientDto createClient(@RequestBody ClientDto clientDto) {
         return clientService.creatClient(clientDto);
     }
+
+//    @GetMapping
+//    public List<ClientEntity> findAllWithPets() {
+//        return clientService.findAllWithPets();
+//    }
 
     @GetMapping
     public List<ClientEntity> getAllClients() {
