@@ -1,7 +1,8 @@
 package com.josespagnossim.petvaccine.Dtos;
 
 
-public record ClientDto(
+public record CustomerDto(
+
         Long id,
         String name,
         String document,
